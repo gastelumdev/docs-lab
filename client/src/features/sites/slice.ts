@@ -102,5 +102,6 @@ export const slice = createSlice({
 
 export const selectData = (state: RootState) => state.sites.data;
 export const selectCreatedData = (state: RootState) => state.sites.createdData;
+export const selectStatus = (state: RootState) => state.sites.status;
 
 export default slice.reducer;

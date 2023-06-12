@@ -16,10 +16,6 @@ import { useAppDispatch, useAppSelector } from "../app/hooks";
 // import { selectEventId } from "../features/events/eventsSlice";
 import DataTable from "react-data-table-component";
 import { useParams } from "react-router-dom";
-import {
-    getParticipantsAsync,
-    selectParticipants,
-} from "../features/participants/participantSlice";
 
 const columns = [
     {
@@ -35,8 +31,6 @@ const columns = [
 ];
 
 const Dashboard = () => {
-    // const eventId = useAppSelector(selectEventId);
-    const participants = useAppSelector(selectParticipants);
     const params = useParams();
     const [eventId, setEventId] = useState(() => {
         const inittialValue = localStorage.getItem("eventId") || "";
@@ -47,14 +41,14 @@ const Dashboard = () => {
     const dispatch = useAppDispatch();
 
     useEffect(() => {
-        dispatch(getParticipantsAsync(localStorage.getItem("eventId")));
+        // dispatch(getParticipantsAsync(localStorage.getItem("eventId")));
     }, [dispatch]);
 
     return (
         <ChakraProvider>
             <SidebarWithHeader>
                 <h1>{params.id}</h1>
-                <Box
+                {/* <Box
                     // maxW={{ base: "full", md: "275px" }}
                     bg="white"
                     w={"full"}
@@ -68,7 +62,7 @@ const Dashboard = () => {
                         selectableRows
                         pagination
                     />
-                </Box>
+                </Box> */}
             </SidebarWithHeader>
         </ChakraProvider>
     );

@@ -1,4 +1,3 @@
-import Events from "./features/events/Events";
 import { Login } from "./features/auth/Login";
 import PrivateRoutes from "./components/PrivateRoutes";
 import { HashRouter as Router, Routes, Route } from "react-router-dom";
@@ -8,13 +7,10 @@ import {
     selectIsAuthenticated,
 } from "./features/auth/authSlice";
 import { useEffect, useState } from "react";
-import Dashboard from "./components/Dashboard";
-import Participants from "./features/participants/Participants";
 import Sites from "./features/sites/View";
 import Pages from "./features/pages/View";
 import Sections from "./features/sections/View";
 import Register from "./features/auth/Register";
-import ParticipantForm from "./features/participants/ParticipantForm";
 
 function App() {
     const [isAuthenticated, setIsAuthenticated] = useState(
