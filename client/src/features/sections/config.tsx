@@ -41,6 +41,7 @@ export default {
                         <Button
                             size="xs"
                             colorScheme="red"
+                            variant={"outline"}
                             mr="6px"
                             onClick={() => handleDelete(row._id)}
                         >
@@ -48,6 +49,7 @@ export default {
                         </Button>
                         <Button
                             colorScheme="blue"
+                            variant={"outline"}
                             size="xs"
                             onClick={() => handleUpdateButton(row)}
                         >
