@@ -29,6 +29,16 @@ exports.createData = async (request, response) => {
     }
 };
 
+exports.getOneData = async (request, response) => {
+    const res = await Model.findById(request.params.id);
+    
+    try {
+        response.send(res);
+    } catch (error) {
+        response.status(500).send(error);
+    }
+};
+
 exports.updateData = async (request, response) => {
     if (request.user) {
 

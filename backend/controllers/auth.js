@@ -6,9 +6,10 @@ exports.signup = async (req, res) => {
   const user = new User({
     username: req.body.username,
     email: req.body.email,
-    role: "admin",
+    role: "normal",
     isAuthenticated: true,
-    password: bcrypt.hashSync(req.body.password, 8)
+    password: bcrypt.hashSync(req.body.password, 8),
+    siteId: ""
   });
 
   
@@ -22,16 +23,11 @@ exports.signup = async (req, res) => {
 };
 
 exports.signin = async (req, res) => {
-  console.log(req.body.email)
   const user = await User.findOne({
       email: req.body.email
     }, "username email password isAuthenticated");
-    // console.log(user)
     try {
-        console.log("Trying")
-        console.log(user);
         if (!user) {
-            console.log("Not user")
             res.status(404)
               .send({
                 message: "User Not found."
@@ -93,7 +89,6 @@ exports.signin = async (req, res) => {
 };
 
 exports.getUser = async (req, res) => {
-  console.log(req.params.id)
   const user = await User.findOne({_id: req.params.id});
 
   try {
@@ -112,8 +107,6 @@ exports.getUser = async (req, res) => {
 exports.getSession = async (req, res) => {
   const user = await User.findOne({_id: req.params.id});
 
-  console.log("Get session: ", user)
-
   try {
     if (!user) {
       res.status(401).send()
@@ -129,8 +122,6 @@ exports.getSession = async (req, res) => {
 
 exports.logout = async (req, res) => {
   const user = await User.findOne({_id: req.params.id});
-
-  console.log("Logout: ", user)
 
   try {
     if (!user) {

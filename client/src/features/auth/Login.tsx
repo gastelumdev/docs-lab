@@ -2,12 +2,14 @@ import React, { useEffect, useState } from "react";
 import { Navigate, Link } from "react-router-dom";
 import { useAppSelector, useAppDispatch } from "../../app/hooks";
 import {
+    getUserAsync,
     // getSessionAsync,
     // loginAsync,
     // selectCSRF,
     // selectSession,
     loginAsync,
     selectIsAuthenticated,
+    selectUser,
     // setCSRFAsync,
 } from "./authSlice";
 
@@ -29,11 +31,16 @@ import chakraTheme from "@chakra-ui/theme";
 
 export function Login() {
     const isAuthenticated = useAppSelector(selectIsAuthenticated);
+    const user = useAppSelector(selectUser);
     // const csrf = useAppSelector(selectCSRF);
     const dispatch = useAppDispatch();
 
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
+
+    useEffect(() => {
+        dispatch(getUserAsync());
+    }, [dispatch]);
 
     const handleEmail = (event: {
         target: { value: React.SetStateAction<string> };
@@ -54,7 +61,15 @@ export function Login() {
     };
 
     if (isAuthenticated) {
-        return <Navigate to="/" replace />;
+        console.log(isAuthenticated);
+        console.log(user.role);
+        if (user.role == "admin") return <Navigate to="/" replace />;
+        if (user.role == "normal") {
+            console.log(user.siteId);
+            return (
+                <Navigate to={`/presentation/site/${user.siteId}`} replace />
+            );
+        }
     }
 
     return (

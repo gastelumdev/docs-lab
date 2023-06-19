@@ -11,6 +11,10 @@ export const register = (user: TUser) => {
     return axios.post(API_URL + "/register", user, {headers: {"Content-Type": "application/json"}})
 }
 
+export const getUser = () => {
+    return axios.get(API_URL + "/user/" + localStorage.getItem("userId"), {headers: {"Content-Type": "application/json", Authorization: "JWT " + localStorage.getItem("token"),}})
+}
+
 export const getSession = () => {
     return axios.get(API_URL + "/user/session/" + localStorage.getItem("userId"), {headers: {"Content-Type": "application/json", Authorization: "JWT " + localStorage.getItem("token"),}})
 }

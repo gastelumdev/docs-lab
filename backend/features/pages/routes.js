@@ -8,7 +8,7 @@ router.get(`/${config.name}/:dataId`, verifyToken, getData);
 
 router.post(`/${config.name}`, verifyToken, createData);
 
-router.get(`/${config.altName}:id`, verifyToken, getOneData);
+router.get(`/${config.altName}/:id`, verifyToken, getOneData);
 
 router.post(`/${config.name}/update/:id`, verifyToken, updateData)
 

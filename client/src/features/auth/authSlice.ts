@@ -1,7 +1,7 @@
 import { AxiosError } from 'axios';
 import { createAsyncThunk, createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { RootState } from '../../app/store';
-import { getSession, login, logout, register } from './authAPI';
+import { getSession, getUser, login, logout, register } from './authAPI';
 import { TSignin, TUser } from '../types/auth';
 import { TypedUseSelectorHook } from 'react-redux';
 import { ErrorResponse } from '@remix-run/router';
@@ -11,13 +11,15 @@ interface TAuthState {
     status: 'idle' | 'loading' | 'failed';
     accessToken: string;
     userId: string | null;
+    user: TUser;
 }
 
 const initialState: TAuthState = {
     isAuthenticated: false,
     accessToken: "",
     status: 'loading',
-    userId: null
+    userId: null,
+    user: {username: "", email: "", password: "", role: "", siteId: ""}
 }
 
 
@@ -59,13 +61,28 @@ export const registerAsync = createAsyncThunk(
     }
 )
 
+export const getUserAsync = createAsyncThunk(
+    'auth/user',
+    async () => {
+        try {
+            if (localStorage.getItem("token")) {
+                const response = await getUser();
+                return response.data;
+            }
+        } catch (err) {
+            const error = err as Error | AxiosError;
+            console.log(error);
+            // return thunkAPI.rejectWithValue({error: error.message});
+        }
+    }
+)
+
 export const getSessionAsync = createAsyncThunk(
     'auth/session',
     async () => {
         try {
             if (localStorage.getItem("token")) {
                 const response = await getSession();
-                console.log(response.data);
                 return response.data;
             }
 
@@ -124,13 +141,22 @@ export const authSlice = createSlice({
         .addCase(registerAsync.rejected, (state) => {
             state.status = 'failed';
         })
+        .addCase(getUserAsync.pending, (state) => {
+            state.status = 'loading';
+        })
+        .addCase(getUserAsync.fulfilled, (state, action) => {
+            state.status = 'idle';
+            state.user = action.payload;
+        })
+        .addCase(getUserAsync.rejected, (state) => {
+            state.status = 'failed';
+        })
         .addCase(getSessionAsync.pending, (state) => {
             state.status = 'loading';
         })
         .addCase(getSessionAsync.fulfilled, (state, action) => {
             state.status = 'idle';
             state.isAuthenticated = action.payload;
-            console.log(action.payload)
         })
         .addCase(getSessionAsync.rejected, (state) => {
             state.status = 'failed';
@@ -154,6 +180,7 @@ export const authSlice = createSlice({
 export const selectUserId = (state: RootState) => state.auth.userId;
 export const selectIsAuthenticated = (state: RootState) => state.auth.isAuthenticated;
 export const selectStatus = (state: RootState) => state.auth.status;
+export const selectUser = (state: RootState) => state.auth.user;
 
 export default authSlice.reducer;
 

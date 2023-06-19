@@ -3,7 +3,6 @@ const config = require("./config")
 
 exports.getData = async (request, response) => {
     if (request.user) {
-        console.log("Getting page data")
         const data = await Model.find({site: request.params.dataId});
 
         try {
@@ -19,7 +18,6 @@ exports.getData = async (request, response) => {
 exports.createData = async (request, response) => {
     if (request.user) {
         const data = new Model(request.body);
-        console.log(data)
 
         try {
             await data.save();
@@ -33,6 +31,7 @@ exports.createData = async (request, response) => {
 };
 
 exports.getOneData = async (request, response) => {
+    console.log("Making a call")
     const res = await Model.findById(request.params.id);
     try {
         response.send(res);

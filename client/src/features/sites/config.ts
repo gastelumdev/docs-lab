@@ -12,5 +12,6 @@ export default {
         description: "",
         owner: localStorage.getItem("userId"),
     },
-    redirectComponent: "pages"
+    redirectComponent: "pages",
+    parentFeature: ""
 }

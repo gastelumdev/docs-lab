@@ -12,6 +12,7 @@ export const createData = (data: TData) => {
 }
 
 export const getOneData = (dataId: string) => {
+    console.log(dataId)
     return axios.get(API_URL + `/${config.altName}/` + dataId, {headers: {"Content-Type": "application/json"}, params: {id: dataId}});
 }
 

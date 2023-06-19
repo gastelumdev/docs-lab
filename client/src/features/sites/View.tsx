@@ -50,8 +50,6 @@ import EditEvent from "./Edit";
 import { TData } from "./types";
 import config from "./config";
 
-console.log(API_URL);
-
 const View = () => {
     const selectedData = useAppSelector(selectData);
     const newSelectedData = useAppSelector(selectCreatedData);

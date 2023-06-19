@@ -18,9 +18,8 @@ const eventModel = require("./models/Event");
 
 connectDB();
 
-console.log(process.env.MONGODB_URI)
-
 // middleware
+console.log(process.env.CORS_URL)
 const corsOptions = {
     origin: process.env.CORS_URL || "http://localhost:3000"
 }
@@ -28,8 +27,6 @@ const corsOptions = {
 app.use(bodyparser.urlencoded({ extended: false }));
 app.use(express.json());
 app.use(cors(corsOptions));
-
-console.log(process.env);
 
 app.use(userRoutes);
 app.use(eventRoutes);

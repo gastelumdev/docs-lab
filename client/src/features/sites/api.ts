@@ -12,6 +12,10 @@ export const createData = (data: TData) => {
     return axios.post(API_URL + `/${config.name}`, data, {headers: {"Content-Type": "application/json", Authorization: "JWT " + localStorage.getItem("token"),}});
 }
 
+export const getOneData = (dataId: string) => {
+    return axios.get(API_URL + `/${config.altName}/` + dataId, {headers: {"Content-Type": "application/json"}, params: {id: dataId}});
+}
+
 export const updateData = (data: TData) => {
     return axios.post(API_URL + `/${config.name}/update/` + data._id, data, {headers: {"Content-Type": "application/json", Authorization: "JWT " + localStorage.getItem("token"),}});
 }

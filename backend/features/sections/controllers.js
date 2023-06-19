@@ -2,7 +2,6 @@ let Model = require("./model");
 
 exports.getData = async (request, response) => {
     if (request.user) {
-        console.log("Page ID:", request.params.dataId)
         const data = await Model.find({page: request.params.dataId});
 
         try {

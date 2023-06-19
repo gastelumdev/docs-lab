@@ -10,7 +10,7 @@ import {
 } from "../features/auth/authSlice";
 import { Spinner } from "@chakra-ui/react";
 
-const PrivateRoutes = () => {
+const PresentationRoutes = () => {
     const status = useAppSelector(selectAuthStatus);
     const user = useAppSelector(selectUser);
     const [isAuthenticated, setIsAuthenticated] = useState(
@@ -31,7 +31,7 @@ const PrivateRoutes = () => {
         if (
             isAuthenticated &&
             localStorage.getItem("token") &&
-            user.role == "admin"
+            (user.role == "admin" || user.role == "normal")
         ) {
             return <Outlet />;
         }
@@ -39,4 +39,4 @@ const PrivateRoutes = () => {
     }
 };
 
-export default PrivateRoutes;
+export default PresentationRoutes;
